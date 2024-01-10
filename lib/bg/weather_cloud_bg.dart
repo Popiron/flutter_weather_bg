@@ -3,15 +3,12 @@ import 'package:flutter_weather_bg/bg/weather_bg.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter_weather_bg/utils/image_utils.dart';
-import 'package:flutter_weather_bg/utils/print_utils.dart';
 import 'package:flutter_weather_bg/utils/weather_type.dart';
 
-//// 专门负责绘制背景云层
-//// 会根据不同的天气类型，选择需要绘制的图片类型，并控制缩放、渐变、位移以及染色，最终显示在屏幕上
 class WeatherCloudBg extends StatefulWidget {
   final WeatherType weatherType;
 
-  WeatherCloudBg({Key key, this.weatherType}) : super(key: key);
+  WeatherCloudBg({super.key, required this.weatherType});
 
   @override
   _WeatherCloudBgState createState() => _WeatherCloudBgState();
@@ -21,12 +18,11 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
   List<ui.Image> _images = [];
 
   Future<void> fetchImages() async {
-    weatherPrint("开始获取云层图片");
-    var image1 = await ImageUtils.getImage('images/cloud.webp');
-    var image2 = await ImageUtils.getImage('images/sun.webp');
-    _images.add(image1);
-    _images.add(image2);
-    weatherPrint("获取云层图片成功： ${_images?.length}");
+    final cloudImage = await ImageUtils.getImage('images/cloud.webp');
+    final sunImage = await ImageUtils.getImage('images/sun.webp');
+    _images
+      ..add(cloudImage)
+      ..add(sunImage);
     setState(() {});
   }
 
@@ -36,23 +32,16 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
     super.initState();
   }
 
-  Widget _buildWidget() {
-    if (_images != null && _images.isNotEmpty) {
-      return CustomPaint(
-        painter: BgPainter(
-            _images,
-            widget.weatherType,
-            SizeInherited.of(context).size.width / 392.0,
-            SizeInherited.of(context).size.width),
-      );
-    } else {
-      return Container();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return _buildWidget();
+    return CustomPaint(
+      painter: BgPainter(
+        _images,
+        widget.weatherType,
+        SizeInherited.of(context).size.width / 392.0,
+        SizeInherited.of(context).size.width,
+      ),
+    );
   }
 }
 
@@ -67,55 +56,52 @@ class BgPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (images != null && images.isNotEmpty) {
-      switch (weatherType) {
-        case WeatherType.sunny:
-          drawSunny(canvas, size);
-          break;
-        case WeatherType.cloudy:
-          drawCloudy(canvas, size);
-          break;
-        case WeatherType.cloudyNight:
-          drawCloudyNight(canvas, size);
-          break;
-        case WeatherType.overcast:
-          drawOvercast(canvas, size);
-          break;
-        case WeatherType.lightRainy:
-          drawLightRainy(canvas, size);
-          break;
-        case WeatherType.middleRainy:
-          drawMiddleRainy(canvas, size);
-          break;
-        case WeatherType.heavyRainy:
-        case WeatherType.thunder:
-          drawHeavyRainy(canvas, size);
-          break;
-        case WeatherType.hazy:
-          drawHazy(canvas, size);
-          break;
-        case WeatherType.foggy:
-          drawFoggy(canvas, size);
-          break;
-        case WeatherType.lightSnow:
-          drawLightSnow(canvas, size);
-          break;
-        case WeatherType.middleSnow:
-          drawMiddleSnow(canvas, size);
-          break;
-        case WeatherType.heavySnow:
-          drawHeavySnow(canvas, size);
-          break;
-        case WeatherType.dusty:
-          drawDusty(canvas, size);
-          break;
-        default:
-          break;
-      }
+    switch (weatherType) {
+      case WeatherType.sunny:
+        drawSunny(canvas, size);
+        break;
+      case WeatherType.cloudy:
+        drawCloudy(canvas, size);
+        break;
+      case WeatherType.cloudyNight:
+        drawCloudyNight(canvas, size);
+        break;
+      case WeatherType.overcast:
+        drawOvercast(canvas, size);
+        break;
+      case WeatherType.lightRainy:
+        drawLightRainy(canvas, size);
+        break;
+      case WeatherType.middleRainy:
+        drawMiddleRainy(canvas, size);
+        break;
+      case WeatherType.heavyRainy:
+      case WeatherType.thunder:
+        drawHeavyRainy(canvas, size);
+        break;
+      case WeatherType.hazy:
+        drawHazy(canvas, size);
+        break;
+      case WeatherType.foggy:
+        drawFoggy(canvas, size);
+        break;
+      case WeatherType.lightSnow:
+        drawLightSnow(canvas, size);
+        break;
+      case WeatherType.middleSnow:
+        drawMiddleSnow(canvas, size);
+        break;
+      case WeatherType.heavySnow:
+        drawHeavySnow(canvas, size);
+        break;
+      case WeatherType.dusty:
+        drawDusty(canvas, size);
+        break;
+      default:
+        break;
     }
   }
 
-  /// 绘制阳光
   void drawSunny(Canvas canvas, Size size) {
     ui.Image image = images[0];
     ui.Image image1 = images[1];
