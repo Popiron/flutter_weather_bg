@@ -22,7 +22,7 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
   List<ui.Image> _images = [];
   late AnimationController _controller;
   List<ThunderParams> _thunderParams = [];
-  late WeatherDataState _state;
+  WeatherDataState _state = WeatherDataState.init;
 
   /// 异步获取雷暴图片资源
   Future<void> fetchImages() async {

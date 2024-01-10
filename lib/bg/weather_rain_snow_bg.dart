@@ -29,7 +29,7 @@ class _WeatherRainSnowBgState extends State<WeatherRainSnowBg>
   late AnimationController _controller;
   List<RainSnowParams> _rainSnows = [];
   int count = 0;
-  late WeatherDataState _state;
+  WeatherDataState _state = WeatherDataState.init;
 
   /// 异步获取雨雪的图片资源和初始化数据
   Future<void> fetchImages() async {
