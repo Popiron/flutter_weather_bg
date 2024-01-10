@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-/// 目前有15种天气类型
 enum WeatherType {
   heavyRainy,
   heavySnow,
@@ -14,30 +13,22 @@ enum WeatherType {
   cloudyNight,
   middleRainy,
   overcast,
-  hazy, // 霾
-  foggy, // 雾
-  dusty, // 浮尘
+  hazy,
+  foggy,
+  dusty,
 }
 
-/// 数据加载状态
 enum WeatherDataState {
-  /// 初始化
   init,
-
-  /// 正在加载
   loading,
-
-  /// 加载结束
   finish,
 }
 
-/// 天气的相关工具类
 class WeatherUtil {
   static bool isSnowRain(WeatherType weatherType) {
     return isRainy(weatherType) || isSnow(weatherType);
   }
 
-  /// 判断是否下雨，小中大包括雷暴，都是属于雨的类型
   static bool isRainy(WeatherType weatherType) {
     return weatherType == WeatherType.lightRainy ||
         weatherType == WeatherType.middleRainy ||
@@ -45,14 +36,12 @@ class WeatherUtil {
         weatherType == WeatherType.thunder;
   }
 
-  /// 判断是否下雪
   static bool isSnow(WeatherType weatherType) {
     return weatherType == WeatherType.lightSnow ||
         weatherType == WeatherType.middleSnow ||
         weatherType == WeatherType.heavySnow;
   }
 
-  // 根据天气类型获取背景的颜色值
   static List<Color> getColor(WeatherType weatherType) {
     switch (weatherType) {
       case WeatherType.sunny:
@@ -89,7 +78,6 @@ class WeatherUtil {
     }
   }
 
-  // 根据天气类型获取天气的描述信息
   static String getWeatherDesc(WeatherType weatherType) {
     switch (weatherType) {
       case WeatherType.sunny:

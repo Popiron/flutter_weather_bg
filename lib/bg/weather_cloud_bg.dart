@@ -159,7 +159,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制多云的夜晚效果
   void drawCloudyNight(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -197,7 +196,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制阴天
   void drawOvercast(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -235,7 +233,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制小雨效果
   void drawLightRainy(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -273,7 +270,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制霾逻辑
   void drawHazy(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -307,7 +303,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制雾
   void drawFoggy(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -341,7 +336,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制浮尘
   void drawDusty(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -375,7 +369,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制大雨
   void drawHeavyRainy(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -413,7 +406,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制中雨
   void drawMiddleRainy(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -451,7 +443,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制小雪
   void drawLightSnow(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -487,7 +478,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制中雪
   void drawMiddleSnow(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();
@@ -523,7 +513,6 @@ class BgPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// 绘制大雪
   void drawHeavySnow(Canvas canvas, Size size) {
     ui.Image image = images[0];
     canvas.save();

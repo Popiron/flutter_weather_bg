@@ -6,9 +6,6 @@ import 'package:flutter_weather_bg/bg/weather_rain_snow_bg.dart';
 import 'package:flutter_weather_bg/bg/weather_thunder_bg.dart';
 import 'package:flutter_weather_bg/utils/weather_type.dart';
 
-/// 最核心的类，集合背景&雷&雨雪&晴晚&流星效果
-/// 1. 支持动态切换大小
-/// 2. 支持渐变过度
 class WeatherBg extends StatefulWidget {
   final WeatherType weatherType;
   final double width;
@@ -41,7 +38,6 @@ class _WeatherBgState extends State<WeatherBg>
   void didUpdateWidget(WeatherBg oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.weatherType != oldWidget.weatherType) {
-      // 如果类别发生改变，需要 start 渐变动画
       _oldWeatherType = oldWidget.weatherType;
       needChange = true;
     }
@@ -98,7 +94,6 @@ class WeatherItemBg extends StatelessWidget {
     this.height,
   });
 
-  /// 构建晴晚背景效果
   Widget _buildNightStarBg() {
     if (weatherType == WeatherType.sunnyNight) {
       return WeatherNightStarBg(
@@ -108,7 +103,6 @@ class WeatherItemBg extends StatelessWidget {
     return Container();
   }
 
-  /// 构建雷暴效果
   Widget _buildThunderBg() {
     if (weatherType == WeatherType.thunder) {
       return WeatherThunderBg(
@@ -118,7 +112,6 @@ class WeatherItemBg extends StatelessWidget {
     return Container();
   }
 
-  /// 构建雨雪背景效果
   Widget _buildRainSnowBg() {
     if (WeatherUtil.isSnowRain(weatherType)) {
       return WeatherRainSnowBg(

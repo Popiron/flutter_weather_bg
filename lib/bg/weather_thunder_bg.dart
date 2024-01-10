@@ -7,7 +7,6 @@ import 'dart:ui' as ui;
 import 'package:flutter_weather_bg/utils/image_utils.dart';
 import 'package:flutter_weather_bg/utils/weather_type.dart';
 
-/// 雷暴动画层
 class WeatherThunderBg extends StatefulWidget {
   final WeatherType weatherType;
 
@@ -24,7 +23,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
   List<ThunderParams> _thunderParams = [];
   WeatherDataState _state = WeatherDataState.init;
 
-  /// 异步获取雷暴图片资源
   Future<void> fetchImages() async {
     var image1 = await ImageUtils.getImage('images/lightning0.webp');
     var image2 = await ImageUtils.getImage('images/lightning1.webp');
@@ -47,7 +45,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
     super.initState();
   }
 
-  // 这里用于初始化动画相关，将闪电三个作为一组循环播放展示
   void initAnim() {
     _controller =
         AnimationController(duration: Duration(seconds: 3), vsync: this);
@@ -61,7 +58,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
       }
     });
 
-    // 构造第一个闪电的动画数据
     var _animation = TweenSequence([
       TweenSequenceItem(
           tween: Tween(begin: 0.0, end: 1.0)
@@ -80,7 +76,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
       ),
     ));
 
-    // 构造第二个闪电的动画数据
     var _animation1 = TweenSequence([
       TweenSequenceItem(
           tween: Tween(begin: 0.0, end: 1.0)
@@ -99,7 +94,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
       ),
     ));
 
-    // 构造第三个闪电的动画数据
     var _animation2 = TweenSequence([
       TweenSequenceItem(
           tween: Tween(begin: 0.0, end: 1.0)
@@ -146,9 +140,7 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
     super.dispose();
   }
 
-  /// 构建雷暴 widget
   Widget _buildWidget() {
-    // 这里需要判断天气类别信息，防止不需要绘制的时候绘制，影响性能
     if (_thunderParams.isNotEmpty &&
         widget.weatherType == WeatherType.thunder) {
       return CustomPaint(
@@ -159,7 +151,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
     }
   }
 
-  /// 初始化雷暴参数
   void initThunderParams() {
     _state = WeatherDataState.loading;
     _thunderParams.clear();
@@ -167,7 +158,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
     var width = size.width;
     var height = size.height;
     var widthRatio = size.width / 392.0;
-    // 配置三个闪电信息
     for (var i = 0; i < 3; i++) {
       var param = ThunderParams(
           _images[Random().nextInt(5)], width, height, widthRatio);
@@ -204,7 +194,6 @@ class ThunderPainter extends CustomPainter {
     }
   }
 
-  /// 这里主要负责绘制雷电
   void drawThunder(ThunderParams params, Canvas canvas, Size size) {
     canvas.save();
     var identity = ColorFilter.matrix(<double>[
