@@ -30,6 +30,9 @@ class _WeatherNightStarBgState extends State<WeatherNightStarBg>
     initAnim();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       fetchData();
+      setState(() {
+        isMounted = true;
+      });
     });
   }
 
@@ -38,7 +41,7 @@ class _WeatherNightStarBgState extends State<WeatherNightStarBg>
       duration: Duration(seconds: 5),
       vsync: this,
     )..addListener(() {
-        setState(() {});
+        if (mounted) setState(() {});
       });
   }
 
@@ -48,10 +51,7 @@ class _WeatherNightStarBgState extends State<WeatherNightStarBg>
     height = size.height;
     widthRatio = width / 392.0;
     initStarParams();
-    setState(() {
-      isMounted = true;
-      _controller.repeat();
-    });
+    _controller.repeat();
   }
 
   void initStarParams() {
@@ -87,6 +87,6 @@ class _WeatherNightStarBgState extends State<WeatherNightStarBg>
         ),
       );
 
-    return Container();
+    return SizedBox.shrink();
   }
 }

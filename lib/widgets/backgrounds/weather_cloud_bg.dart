@@ -24,7 +24,6 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
       await ImageUtils.getImage('images/sun.webp')
     ];
     _images.addAll(images);
-    setState(() {});
   }
 
   @override
@@ -32,7 +31,9 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await fetchImages();
-      isMounted = true;
+      setState(() {
+        isMounted = true;
+      });
     });
   }
 
@@ -47,7 +48,7 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
           SizeInherited.of(context).size.width,
         ),
       );
-    return Container();
+    return SizedBox.shrink();
   }
 }
 

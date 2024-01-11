@@ -37,7 +37,6 @@ class _WeatherRainSnowBgState extends State<WeatherRainSnowBg>
       await ImageUtils.getImage('images/snow.webp'),
     ];
     _images.addAll(images);
-    setState(() {});
   }
 
   Future<void> initParams() async {
@@ -71,7 +70,6 @@ class _WeatherRainSnowBgState extends State<WeatherRainSnowBg>
       }
     }
     _controller.forward();
-    isMounted = true;
   }
 
   @override
@@ -89,9 +87,13 @@ class _WeatherRainSnowBgState extends State<WeatherRainSnowBg>
   void initState() {
     super.initState();
     initAnim();
-    fetchImages();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await fetchImages();
       initParams();
+      setState(() {
+        isMounted = true;
+      });
     });
   }
 
@@ -99,16 +101,15 @@ class _WeatherRainSnowBgState extends State<WeatherRainSnowBg>
     _controller = AnimationController(
       duration: Duration(minutes: 1),
       vsync: this,
-    );
-    CurvedAnimation(parent: _controller, curve: Curves.linear);
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.repeat();
-      }
-    });
+    )
+      ..addListener(() {
+        if (mounted) setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _controller.repeat();
+        }
+      });
   }
 
   @override
@@ -122,7 +123,7 @@ class _WeatherRainSnowBgState extends State<WeatherRainSnowBg>
     if (isMounted) {
       return CustomPaint(painter: RainSnowPainter(this));
     }
-    return Container();
+    return SizedBox.shrink();
   }
 }
 

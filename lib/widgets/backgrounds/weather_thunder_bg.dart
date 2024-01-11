@@ -32,6 +32,9 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await fetchImages();
       initThunderParams();
+      setState(() {
+        isMounted = true;
+      });
     });
   }
 
@@ -44,7 +47,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
       await ImageUtils.getImage('images/lightning4.webp'),
     ];
     _images.addAll(images);
-    setState(() {});
   }
 
   void initAnim() {
@@ -129,7 +131,6 @@ class _WeatherCloudBgState extends State<WeatherThunderBg>
       _thunderParams.add(param);
     }
     _controller.forward();
-    isMounted = true;
   }
 
   @override
