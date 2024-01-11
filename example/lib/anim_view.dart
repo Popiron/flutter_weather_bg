@@ -28,7 +28,7 @@ class _AnimViewWidgetState extends State<AnimViewWidget> {
                 ...WeatherType.values
                     .map((e) => PopupMenuItem<WeatherType>(
                           value: e,
-                          child: Text(WeatherUtil.getWeatherDesc(e)),
+                          child: Text(e.toString()),
                         ))
                     .toList(),
               ];
@@ -37,7 +37,7 @@ class _AnimViewWidgetState extends State<AnimViewWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(WeatherUtil.getWeatherDesc(_weatherType)),
+                Text(_weatherType.toString()),
                 const Icon(Icons.more_vert)
               ],
             ),

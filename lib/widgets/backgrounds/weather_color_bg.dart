@@ -11,7 +11,7 @@ class WeatherColorBg extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: WeatherUtil.getColor(weatherType),
+          colors: weatherType.colors,
           stops: [0, 1],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

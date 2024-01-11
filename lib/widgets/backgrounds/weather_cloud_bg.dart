@@ -52,13 +52,14 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
 }
 
 class BgPainter extends CustomPainter {
-  final _paint = Paint();
   final List<ui.Image> images;
   final WeatherType weatherType;
-  final widthRatio;
-  final width;
+  final double widthRatio;
+  final double width;
 
   BgPainter(this.images, this.weatherType, this.widthRatio, this.width);
+
+  final _paint = Paint();
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -75,13 +76,13 @@ class BgPainter extends CustomPainter {
       case WeatherType.overcast:
         drawOvercast(canvas, size);
         break;
-      case WeatherType.lightRainy:
+      case WeatherType.lightRain:
         drawLightRainy(canvas, size);
         break;
-      case WeatherType.middleRainy:
+      case WeatherType.middleRain:
         drawMiddleRainy(canvas, size);
         break;
-      case WeatherType.heavyRainy:
+      case WeatherType.heavyRain:
       case WeatherType.thunder:
         drawHeavyRainy(canvas, size);
         break;

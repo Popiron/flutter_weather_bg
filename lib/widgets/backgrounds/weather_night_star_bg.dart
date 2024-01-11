@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
 import 'package:flutter_weather_bg/widgets/painters/star_painter.dart';
-import 'package:flutter_weather_bg/widgets/weather_bg.dart';
 
 class WeatherNightStarBg extends StatefulWidget {
   final WeatherType weatherType;

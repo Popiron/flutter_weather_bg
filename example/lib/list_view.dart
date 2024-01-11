@@ -72,7 +72,7 @@ class ListItemWidget extends StatelessWidget {
               alignment: const Alignment(0.8, 0),
               height: 100,
               child: Text(
-                WeatherUtil.getWeatherDesc(weatherType),
+                weatherType.toString(),
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 25,

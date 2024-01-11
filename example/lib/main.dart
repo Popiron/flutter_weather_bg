@@ -115,7 +115,7 @@ class HomePage extends StatelessWidget {
           children: [
             _buildItem(context, routePage, "thunder", WeatherType.thunder),
             _buildItem(
-                context, routeGrid, "sunnyNight", WeatherType.sunnyNight),
+                context, routeGrid, "sunnyNight", WeatherType.clearNight),
             _buildItem(context, routeList, "lightSnow", WeatherType.lightSnow),
             _buildItem(context, routeAnim, "sunny", WeatherType.sunny),
           ],

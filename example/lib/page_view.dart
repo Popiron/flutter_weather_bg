@@ -19,11 +19,12 @@ class PageViewWidget extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  WeatherUtil.getWeatherDesc(WeatherType.values[index]),
+                  WeatherType.values[index].toString(),
                   style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
             ],

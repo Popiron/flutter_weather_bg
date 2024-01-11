@@ -1,52 +1,38 @@
 import 'package:flutter/cupertino.dart';
 
 enum WeatherType {
-  heavyRainy,
+  heavyRain,
   heavySnow,
   middleSnow,
   thunder,
-  lightRainy,
+  lightRain,
   lightSnow,
-  sunnyNight,
+  clearNight,
   sunny,
   cloudy,
   cloudyNight,
-  middleRainy,
+  middleRain,
   overcast,
   hazy,
   foggy,
-  dusty,
-}
+  dusty;
 
-enum WeatherDataState {
-  init,
-  loading,
-  finish,
-}
+  bool get isRainy =>
+      this == WeatherType.lightRain ||
+      this == WeatherType.middleRain ||
+      this == WeatherType.heavyRain ||
+      this == WeatherType.thunder;
 
-class WeatherUtil {
-  static bool isSnowRain(WeatherType weatherType) {
-    return isRainy(weatherType) || isSnow(weatherType);
-  }
+  bool get isSnowy =>
+      this == WeatherType.lightSnow ||
+      this == WeatherType.middleSnow ||
+      this == WeatherType.heavySnow;
 
-  static bool isRainy(WeatherType weatherType) {
-    return weatherType == WeatherType.lightRainy ||
-        weatherType == WeatherType.middleRainy ||
-        weatherType == WeatherType.heavyRainy ||
-        weatherType == WeatherType.thunder;
-  }
-
-  static bool isSnow(WeatherType weatherType) {
-    return weatherType == WeatherType.lightSnow ||
-        weatherType == WeatherType.middleSnow ||
-        weatherType == WeatherType.heavySnow;
-  }
-
-  static List<Color> getColor(WeatherType weatherType) {
-    switch (weatherType) {
+  List<Color> get colors {
+    switch (this) {
       case WeatherType.sunny:
         return [Color(0xFF0071D1), Color(0xFF6DA6E4)];
-      case WeatherType.sunnyNight:
+      case WeatherType.clearNight:
         return [Color(0xFF061E74), Color(0xFF275E9A)];
       case WeatherType.cloudy:
         return [Color(0xFF5C82C1), Color(0xFF95B1DB)];
@@ -54,11 +40,11 @@ class WeatherUtil {
         return [Color(0xFF2C3A60), Color(0xFF4B6685)];
       case WeatherType.overcast:
         return [Color(0xFF8FA3C0), Color(0xFF8C9FB1)];
-      case WeatherType.lightRainy:
+      case WeatherType.lightRain:
         return [Color(0xFF556782), Color(0xFF7c8b99)];
-      case WeatherType.middleRainy:
+      case WeatherType.middleRain:
         return [Color(0xFF3A4B65), Color(0xFF495764)];
-      case WeatherType.heavyRainy:
+      case WeatherType.heavyRain:
       case WeatherType.thunder:
         return [Color(0xFF3B434E), Color(0xFF565D66)];
       case WeatherType.hazy:
@@ -75,41 +61,6 @@ class WeatherUtil {
         return [Color(0xFFB99D79), Color(0xFF6C5635)];
       default:
         return [Color(0xFF0071D1), Color(0xFF6DA6E4)];
-    }
-  }
-
-  static String getWeatherDesc(WeatherType weatherType) {
-    switch (weatherType) {
-      case WeatherType.sunny:
-      case WeatherType.sunnyNight:
-        return "sunny";
-      case WeatherType.cloudy:
-      case WeatherType.cloudyNight:
-        return "cloudy";
-      case WeatherType.overcast:
-        return "overcast";
-      case WeatherType.lightRainy:
-        return "lightRainy";
-      case WeatherType.middleRainy:
-        return "middleRainy";
-      case WeatherType.heavyRainy:
-        return "heavyRainy";
-      case WeatherType.thunder:
-        return "thunder";
-      case WeatherType.hazy:
-        return "hazy";
-      case WeatherType.foggy:
-        return "foggy";
-      case WeatherType.lightSnow:
-        return "lightSnow";
-      case WeatherType.middleSnow:
-        return "middleSnow";
-      case WeatherType.heavySnow:
-        return "heavySnow";
-      case WeatherType.dusty:
-        return "dusty";
-      default:
-        return "clear";
     }
   }
 }

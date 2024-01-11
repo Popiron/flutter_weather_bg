@@ -86,7 +86,7 @@ class GridItemWidget extends StatelessWidget {
             ),
             Center(
               child: Text(
-                WeatherUtil.getWeatherDesc(weatherType),
+                weatherType.toString(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 30 / count,

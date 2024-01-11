@@ -28,7 +28,7 @@ class WeatherItemBg extends StatelessWidget {
           children: [
             WeatherColorBg(weatherType: weatherType),
             WeatherCloudBg(weatherType: weatherType),
-            if (WeatherUtil.isSnowRain(weatherType))
+            if (weatherType.isRainy || weatherType.isSnowy)
               WeatherRainSnowBg(
                 weatherType: weatherType,
                 viewWidth: width,
@@ -36,7 +36,7 @@ class WeatherItemBg extends StatelessWidget {
               ),
             if (weatherType == WeatherType.thunder)
               WeatherThunderBg(weatherType: weatherType),
-            if (weatherType == WeatherType.sunnyNight)
+            if (weatherType == WeatherType.clearNight)
               WeatherNightStarBg(weatherType: weatherType),
           ],
         ),
