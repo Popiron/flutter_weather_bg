@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg/bg/weather_bg.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter_weather_bg/utils/image_utils.dart';
 import 'package:flutter_weather_bg/utils/weather_type.dart';
+import 'package:flutter_weather_bg/widgets/weather_bg.dart';
 
 class WeatherCloudBg extends StatefulWidget {
   final WeatherType weatherType;
@@ -15,33 +15,39 @@ class WeatherCloudBg extends StatefulWidget {
 }
 
 class _WeatherCloudBgState extends State<WeatherCloudBg> {
-  List<ui.Image> _images = [];
+  final List<ui.Image> _images = [];
+  bool isMounted = false;
 
   Future<void> fetchImages() async {
-    final cloudImage = await ImageUtils.getImage('images/cloud.webp');
-    final sunImage = await ImageUtils.getImage('images/sun.webp');
-    _images
-      ..add(cloudImage)
-      ..add(sunImage);
+    final images = [
+      await ImageUtils.getImage('images/cloud.webp'),
+      await ImageUtils.getImage('images/sun.webp')
+    ];
+    _images.addAll(images);
     setState(() {});
   }
 
   @override
   void initState() {
-    fetchImages();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await fetchImages();
+      isMounted = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: BgPainter(
-        _images,
-        widget.weatherType,
-        SizeInherited.of(context).size.width / 392.0,
-        SizeInherited.of(context).size.width,
-      ),
-    );
+    if (isMounted)
+      return CustomPaint(
+        painter: BgPainter(
+          _images,
+          widget.weatherType,
+          SizeInherited.of(context).size.width / 392.0,
+          SizeInherited.of(context).size.width,
+        ),
+      );
+    return Container();
   }
 }
 
@@ -103,8 +109,8 @@ class BgPainter extends CustomPainter {
   }
 
   void drawSunny(Canvas canvas, Size size) {
-    ui.Image image = images[0];
-    ui.Image image1 = images[1];
+    final image = images[0];
+    final image1 = images[1];
     _paint.maskFilter = MaskFilter.blur(BlurStyle.normal, 40);
     canvas.save();
     final sunScale = 1.2 * widthRatio;

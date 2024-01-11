@@ -82,34 +82,34 @@ class WeatherUtil {
     switch (weatherType) {
       case WeatherType.sunny:
       case WeatherType.sunnyNight:
-        return "晴";
+        return "sunny";
       case WeatherType.cloudy:
       case WeatherType.cloudyNight:
-        return "多云";
+        return "cloudy";
       case WeatherType.overcast:
-        return "阴";
+        return "overcast";
       case WeatherType.lightRainy:
-        return "小雨";
+        return "lightRainy";
       case WeatherType.middleRainy:
-        return "中雨";
+        return "middleRainy";
       case WeatherType.heavyRainy:
-        return "大雨";
+        return "heavyRainy";
       case WeatherType.thunder:
-        return "雷阵雨";
+        return "thunder";
       case WeatherType.hazy:
-        return "雾";
+        return "hazy";
       case WeatherType.foggy:
-        return "霾";
+        return "foggy";
       case WeatherType.lightSnow:
-        return "小雪";
+        return "lightSnow";
       case WeatherType.middleSnow:
-        return "中雪";
+        return "middleSnow";
       case WeatherType.heavySnow:
-        return "大雪";
+        return "heavySnow";
       case WeatherType.dusty:
-        return "浮尘";
+        return "dusty";
       default:
-        return "晴";
+        return "clear";
     }
   }
 }

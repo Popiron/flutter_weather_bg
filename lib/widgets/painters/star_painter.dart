@@ -1,104 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg/flutter_weather_bg.dart';
 import 'dart:ui' as ui;
 
-class WeatherNightStarBg extends StatefulWidget {
-  final WeatherType weatherType;
-
-  WeatherNightStarBg({super.key, required this.weatherType});
-
-  @override
-  _WeatherNightStarBgState createState() => _WeatherNightStarBgState();
-}
-
-class _WeatherNightStarBgState extends State<WeatherNightStarBg>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  List<_StarParam> _starParams = [];
-  List<_MeteorParam> _meteorParams = [];
-  WeatherDataState _state = WeatherDataState.init;
-  late double width;
-  late double height;
-  late double widthRatio;
-
-  void fetchData() async {
-    Size size = SizeInherited.of(context).size;
-    width = size.width;
-    height = size.height;
-    widthRatio = width / 392.0;
-    _state = WeatherDataState.loading;
-    initStarParams();
-    setState(() {
-      _controller.repeat();
-    });
-    _state = WeatherDataState.finish;
-  }
-
-  void initStarParams() {
-    for (int i = 0; i < 100; i++) {
-      var index = Random().nextInt(2);
-      _StarParam _starParam = _StarParam(index);
-      _starParam.init(width, height, widthRatio);
-      _starParams.add(_starParam);
-    }
-    for (int i = 0; i < 4; i++) {
-      _MeteorParam param = _MeteorParam();
-      param.init(width, height, widthRatio);
-      _meteorParams.add(param);
-    }
-  }
-
-  @override
-  void initState() {
-    _controller =
-        AnimationController(duration: Duration(seconds: 5), vsync: this);
-    _controller.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Widget _buildWidget() {
-    if (_starParams.isNotEmpty &&
-        widget.weatherType == WeatherType.sunnyNight) {
-      return CustomPaint(
-        painter:
-            _StarPainter(_starParams, _meteorParams, width, height, widthRatio),
-      );
-    } else {
-      return Container();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_state == WeatherDataState.init) {
-      fetchData();
-    } else if (_state == WeatherDataState.finish) {
-      return _buildWidget();
-    }
-    return Container();
-  }
-}
-
-class _StarPainter extends CustomPainter {
+class StarPainter extends CustomPainter {
   final _paint = Paint();
   final _meteorPaint = Paint();
-  final List<_StarParam> _starParams;
+  final List<StarParam> _starParams;
 
   final width;
   final height;
   final widthRatio;
 
-  final List<_MeteorParam> _meteorParams;
+  final List<MeteorParam> _meteorParams;
 
   final double _meteorWidth = 200;
 
@@ -106,8 +20,13 @@ class _StarPainter extends CustomPainter {
 
   final Radius _radius = Radius.circular(10);
 
-  _StarPainter(this._starParams, this._meteorParams, this.width, this.height,
-      this.widthRatio) {
+  StarPainter(
+    this._starParams,
+    this._meteorParams,
+    this.width,
+    this.height,
+    this.widthRatio,
+  ) {
     _paint.maskFilter = MaskFilter.blur(BlurStyle.normal, 1);
     _paint.color = Colors.white;
     _paint.style = PaintingStyle.fill;
@@ -127,7 +46,7 @@ class _StarPainter extends CustomPainter {
     }
   }
 
-  void drawMeteor(_MeteorParam param, Canvas canvas) {
+  void drawMeteor(MeteorParam param, Canvas canvas) {
     canvas.save();
     var gradient = ui.Gradient.linear(
       const Offset(0, 0),
@@ -150,7 +69,7 @@ class _StarPainter extends CustomPainter {
     canvas.restore();
   }
 
-  void drawStar(_StarParam param, Canvas canvas) {
+  void drawStar(StarParam param, Canvas canvas) {
     canvas.save();
     var identity = ColorFilter.matrix(<double>[
       1,
@@ -187,7 +106,7 @@ class _StarPainter extends CustomPainter {
   }
 }
 
-class _MeteorParam {
+class MeteorParam {
   late double translateX;
   late double translateY;
   late double radians;
@@ -215,7 +134,7 @@ class _MeteorParam {
   }
 }
 
-class _StarParam {
+class StarParam {
   late double x;
 
   late double y;
@@ -234,7 +153,7 @@ class _StarParam {
 
   late double widthRatio;
 
-  _StarParam(this.index);
+  StarParam(this.index);
 
   void reset() {
     alpha = 0;

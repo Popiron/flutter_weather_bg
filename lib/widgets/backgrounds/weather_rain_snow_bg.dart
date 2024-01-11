@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg/bg/weather_bg.dart';
 import 'package:flutter_weather_bg/utils/image_utils.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter_weather_bg/utils/weather_type.dart';
+import 'package:flutter_weather_bg/widgets/weather_bg.dart';
 
 class WeatherRainSnowBg extends StatefulWidget {
   final WeatherType weatherType;

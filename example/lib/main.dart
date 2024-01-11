@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg/bg/weather_bg.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
-import 'package:flutter_weather_bg/utils/print_utils.dart';
 import 'package:flutter_weather_bg_example/anim_view.dart';
 
 import 'package:flutter_weather_bg_example/grid_view.dart';
@@ -11,7 +9,7 @@ import 'package:flutter_weather_bg_example/list_view.dart';
 import 'package:flutter_weather_bg_example/page_view.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 const routePage = "page";
@@ -20,8 +18,10 @@ const routeGrid = "grid";
 const routeAnim = "anim";
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -34,31 +34,27 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        routePage: (BuildContext context) {
-          // 普通的侧滑样式
-          return PageViewWidget();
+        routePage: (context) {
+          return const PageViewWidget();
         },
-        routeList: (BuildContext context) {
-          // 宫格样式
-          return ListViewWidget();
+        routeList: (context) {
+          return const ListViewWidget();
         },
-        routeGrid: (BuildContext context) {
-          // 宫格样式
-          return GridViewWidget();
+        routeGrid: (context) {
+          return const GridViewWidget();
         },
-        routeAnim: (BuildContext context) {
-          // 动态切换 宽高样式
-          return AnimViewWidget();
+        routeAnim: (context) {
+          return const AnimViewWidget();
         }
       },
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
-/// demo 首页布局
 class HomePage extends StatelessWidget {
-  /// 创建首页 item 布局
+  const HomePage({super.key});
+
   Widget _buildItem(BuildContext context, String routeName, String desc,
       WeatherType weatherType) {
     double width = MediaQuery.of(context).size.width;
@@ -67,7 +63,7 @@ class HomePage extends StatelessWidget {
     double itemWidth = (width - marginLeft * 4) / 2;
     double itemHeight = itemWidth * 1.5;
     var radius = 10.0;
-    return Container(
+    return SizedBox(
       width: itemWidth,
       height: itemHeight,
       child: Card(
@@ -93,14 +89,13 @@ class HomePage extends StatelessWidget {
                   child: Center(
                     child: Text(
                       desc,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20),
                     ),
                   ),
                   onTap: () {
-                    weatherPrint("name: $routeName");
                     Navigator.of(context).pushNamed(routeName);
                   },
                 ),
@@ -118,10 +113,11 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Wrap(
           children: [
-            _buildItem(context, routePage, "翻页效果", WeatherType.thunder),
-            _buildItem(context, routeGrid, "宫格效果", WeatherType.sunnyNight),
-            _buildItem(context, routeList, "列表效果", WeatherType.lightSnow),
-            _buildItem(context, routeAnim, "切换效果", WeatherType.sunny),
+            _buildItem(context, routePage, "thunder", WeatherType.thunder),
+            _buildItem(
+                context, routeGrid, "sunnyNight", WeatherType.sunnyNight),
+            _buildItem(context, routeList, "lightSnow", WeatherType.lightSnow),
+            _buildItem(context, routeAnim, "sunny", WeatherType.sunny),
           ],
         ),
       ),
