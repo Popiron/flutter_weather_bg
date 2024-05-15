@@ -79,11 +79,7 @@ class GridItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(radius))),
         child: Stack(
           children: [
-            WeatherBg(
-              weatherType: weatherType,
-              width: MediaQuery.of(context).size.width / count,
-              height: MediaQuery.of(context).size.width * 2,
-            ),
+            WeatherBg(weatherType: weatherType),
             Center(
               child: Text(
                 weatherType.toString(),

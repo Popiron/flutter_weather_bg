@@ -1,6 +1,8 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
-import 'package:flutter_weather_bg/utils/weather_type.dart';
 
 class AnimViewWidget extends StatefulWidget {
   const AnimViewWidget({super.key});
@@ -10,99 +12,51 @@ class AnimViewWidget extends StatefulWidget {
 }
 
 class _AnimViewWidgetState extends State<AnimViewWidget> {
-  WeatherType _weatherType = WeatherType.sunny;
-  double _width = 100;
-  double _height = 200;
+  WeatherType weatherType = WeatherType.sunny;
+  late final StreamSubscription<WeatherType> weatherStreamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      weatherStreamSubscription = Stream<WeatherType>.periodic(
+        const Duration(seconds: 3),
+        (_) => WeatherType.values[Random().nextInt(WeatherType.values.length)],
+      ).listen((weather) {
+        setState(() {
+          weatherType = weather;
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var radius = 5 + (_width - 100) / 200 * 10;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("AnimView"),
-        actions: [
-          PopupMenuButton<WeatherType>(
-            itemBuilder: (context) {
-              return <PopupMenuEntry<WeatherType>>[
-                ...WeatherType.values
-                    .map((e) => PopupMenuItem<WeatherType>(
-                          value: e,
-                          child: Text(e.toString()),
-                        ))
-                    .toList(),
-              ];
-            },
-            initialValue: _weatherType,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(_weatherType.toString()),
-                const Icon(Icons.more_vert)
-              ],
-            ),
-            onSelected: (count) {
-              setState(() {
-                _weatherType = count;
-              });
-            },
-          ),
-        ],
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
+      body: Stack(
         children: [
-          Card(
-            elevation: 7,
-            margin: const EdgeInsets.only(top: 15),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(radius)),
-            child: ClipPath(
-              clipper: ShapeBorderClipper(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(radius))),
-              child: WeatherBg(
-                weatherType: _weatherType,
-                width: _width,
-                height: _height,
+          WeatherBg(weatherType: weatherType),
+          Center(
+            child: Text(
+              weatherType.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Slider(
-            min: 100,
-            max: 300,
-            label: "$_width",
-            divisions: 200,
-            onChanged: (value) {
-              setState(() {
-                _width = value;
-              });
-            },
-            value: _width,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Slider(
-            min: 200,
-            max: 600,
-            label: "$_height",
-            divisions: 400,
-            onChanged: (value) {
-              setState(() {
-                _height = value;
-              });
-            },
-            value: _height,
           )
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    weatherStreamSubscription.cancel();
+    super.dispose();
   }
 }

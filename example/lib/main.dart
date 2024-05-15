@@ -68,21 +68,21 @@ class HomePage extends StatelessWidget {
       height: itemHeight,
       child: Card(
         elevation: 7,
-        margin:
-            EdgeInsets.symmetric(horizontal: marginLeft, vertical: marginTop),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
+        margin: EdgeInsets.symmetric(
+          horizontal: marginLeft,
+          vertical: marginTop,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radius),
+        ),
         child: ClipPath(
           clipper: ShapeBorderClipper(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(radius))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius)),
+          ),
           child: Stack(
             children: [
-              WeatherBg(
-                weatherType: weatherType,
-                width: itemWidth,
-                height: itemHeight,
-              ),
+              Positioned.fill(child: WeatherBg(weatherType: weatherType)),
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
                 child: InkWell(
@@ -90,9 +90,10 @@ class HomePage extends StatelessWidget {
                     child: Text(
                       desc,
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   onTap: () {
@@ -115,7 +116,11 @@ class HomePage extends StatelessWidget {
           children: [
             _buildItem(context, routePage, "thunder", WeatherType.thunder),
             _buildItem(
-                context, routeGrid, "sunnyNight", WeatherType.clearNight),
+              context,
+              routeGrid,
+              "sunnyNight",
+              WeatherType.clearNight,
+            ),
             _buildItem(context, routeList, "lightSnow", WeatherType.lightSnow),
             _buildItem(context, routeAnim, "sunny", WeatherType.sunny),
           ],

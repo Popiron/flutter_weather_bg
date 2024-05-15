@@ -52,11 +52,7 @@ class ListItemWidget extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            WeatherBg(
-              weatherType: weatherType,
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-            ),
+            Positioned.fill(child: WeatherBg(weatherType: weatherType)),
             Container(
               alignment: const Alignment(-0.8, 0),
               height: 100,

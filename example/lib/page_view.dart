@@ -12,11 +12,7 @@ class PageViewWidget extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Stack(
             children: [
-              WeatherBg(
-                weatherType: WeatherType.values[index],
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-              ),
+              WeatherBg(weatherType: WeatherType.values[index]),
               Center(
                 child: Text(
                   WeatherType.values[index].toString(),

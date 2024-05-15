@@ -4,76 +4,26 @@ import 'package:flutter_weather_bg/widgets/weather_item_bg.dart';
 
 class WeatherBg extends StatefulWidget {
   final WeatherType weatherType;
-  final double width;
-  final double height;
 
-  WeatherBg({
-    super.key,
-    required this.weatherType,
-    required this.width,
-    required this.height,
-  });
+  WeatherBg({super.key, required this.weatherType});
 
   @override
   _WeatherBgState createState() => _WeatherBgState();
 }
 
-class _WeatherBgState extends State<WeatherBg>
-    with SingleTickerProviderStateMixin {
-  late WeatherType _oldWeatherType;
-  bool needChange = false;
-  CrossFadeState state = CrossFadeState.showSecond;
-
-  @override
-  void initState() {
-    super.initState();
-    _oldWeatherType = widget.weatherType;
-  }
-
-  @override
-  void didUpdateWidget(WeatherBg oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.weatherType != oldWidget.weatherType) {
-      _oldWeatherType = oldWidget.weatherType;
-      needChange = true;
-    }
-  }
-
+class _WeatherBgState extends State<WeatherBg> {
   @override
   Widget build(BuildContext context) {
-    final oldWeather = WeatherItemBg(
-      weatherType: _oldWeatherType,
-      width: widget.width,
-      height: widget.height,
-    );
-    final currentWeather = WeatherItemBg(
-      weatherType: widget.weatherType,
-      width: widget.width,
-      height: widget.height,
-    );
-
-    var firstWidget = currentWeather;
-    var secondWidget = currentWeather;
-    if (needChange) {
-      if (state == CrossFadeState.showSecond) {
-        state = CrossFadeState.showFirst;
-        firstWidget = currentWeather;
-        secondWidget = oldWeather;
-      } else {
-        state = CrossFadeState.showSecond;
-        secondWidget = currentWeather;
-        firstWidget = oldWeather;
-      }
-    }
-    needChange = false;
-    return SizeInherited(
-      child: AnimatedCrossFade(
-        firstChild: firstWidget,
-        secondChild: secondWidget,
-        duration: Duration(milliseconds: 300),
-        crossFadeState: state,
+    return LayoutBuilder(
+      builder: (context, constraints) => SizeInherited(
+        size: Size(constraints.maxWidth, constraints.maxHeight),
+        child: AnimatedSwitcher(
+          child: WeatherItemBg(
+              key: ValueKey(widget.weatherType),
+              weatherType: widget.weatherType),
+          duration: Duration(milliseconds: 500),
+        ),
       ),
-      size: Size(widget.width, widget.height),
     );
   }
 }
