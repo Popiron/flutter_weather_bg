@@ -31,9 +31,10 @@ class _WeatherCloudBgState extends State<WeatherCloudBg> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await fetchImages();
-      setState(() {
-        isMounted = true;
-      });
+      if (mounted)
+        setState(() {
+          isMounted = true;
+        });
     });
   }
 
